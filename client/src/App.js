@@ -5,12 +5,13 @@ import React from 'react'
 import { Button } from 'antd'
 import { Login } from './pages/login.js'
 import { Register } from './pages/register.js'
-
+import {Toaster} from 'react-hot-toast'
 function App() {
   return (
     <div>
       <BrowserRouter>
-        <Routes>
+        <Toaster position="top-center" reverseOrder={false} />
+          <Routes>
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           

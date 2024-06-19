@@ -12,6 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios'
+import { json, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 function Copyright(props) {
   return (
@@ -31,14 +34,33 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 function Register() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      name: data.get('name'),
-      email: data.get('email'),
-      password: data.get('password'),
+  const navigate = useNavigate()
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // prevents default form submission
+    const formData = new FormData(event.currentTarget); // currentTarget is the DOM element that triggered the event
+    const data = {...Object.fromEntries(formData.entries())};
+    try{
+      const response = await fetch('/api/user/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
     });
+      const responseData = await response.json()
+      if(responseData.success){
+        toast.success('User created successfully')
+        toast('Redirecting to login page')
+        navigate('/login')
+      }
+      else{
+        toast.error(responseData.message)
+      }
+    }
+    catch(error){
+      toast.error('Something went wrong')
+    }
+    // console.log(responseData);
   };
 
   return (

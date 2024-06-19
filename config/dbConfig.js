@@ -9,6 +9,7 @@ connection.on("connected",()=>{
 })
 
 connection.on("error",()=>{
+    
     console.log(`There has been some error while setting up MongoDB`);
 })
 
