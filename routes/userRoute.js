@@ -3,6 +3,7 @@ const router = express.Router()
 const bcrypt = require("bcryptjs")
 const User = require('../models/userModel.js')
 const jwt = require('jsonwebtoken')
+const authMiddleware = require("../middlewares/authMiddleware.js")
 
 router.use(express.json()) 
 
@@ -52,6 +53,34 @@ router.post('/login',async (req,res)=>{
         res.status(500).send({message: "Server error",success: false,error})
     }
 })
+
+router.post('/get-user-info-by-id',authMiddleware, async (req,res)=>{
+    try{
+        const user = await User.findOne({_id: req.body.userId})
+        if(!user){
+            return res.status(200).send({
+                message: "User not found", success: false
+            })
+        }
+        else{
+            
+            return res.status(200).send({
+                success: true,
+                data: {
+                    name: user.name,
+                    email: user.email
+                }
+            })
+        }
+    }
+    catch(error){
+        return res.status(500).send({
+            message: "Error getting user info",
+            success: false
+        })
+    }
+})
+
 
 module.exports = router
 

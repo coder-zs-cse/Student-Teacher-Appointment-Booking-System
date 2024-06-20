@@ -7,6 +7,8 @@ import { Login } from './pages/login.js'
 import { Register } from './pages/register.js'
 import { Home } from './pages/home.js'
 import {Toaster} from 'react-hot-toast'
+import { ProtectedRoute } from './components/ProtectedRoutes.js';
+import { PublicRoutes} from './components/PublicRoutes.js'
 
 function App() {
   return (
@@ -14,9 +16,22 @@ function App() {
       <BrowserRouter>
         <Toaster position="top-center" reverseOrder={false} />
           <Routes>
-          <Route path='/home' element={<Home />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/login' element={<Login />} />
+          <Route path='/' element={
+            <ProtectedRoute>
+            <Home />
+            </ProtectedRoute>  
+          } />
+          <Route path='/register' element={
+            <PublicRoutes>
+            <Register />
+            </PublicRoutes>
+            } />
+
+          <Route path='/login' element={
+            <PublicRoutes>
+            <Login />
+            </PublicRoutes>} 
+          />
           
         </Routes>
       </BrowserRouter>

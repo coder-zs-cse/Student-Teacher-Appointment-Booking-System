@@ -52,7 +52,7 @@ function Login() {
         localStorage.setItem("token", responseData.data.token)
         toast.success('You have Logged in successfully')
         toast('Redirecting to home page')
-        navigate('/home')
+        navigate('/')
       }
       else{
         toast.error(responseData.message)
