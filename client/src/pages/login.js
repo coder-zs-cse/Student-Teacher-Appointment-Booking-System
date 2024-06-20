@@ -12,6 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+
 
 function Copyright(props) {
   return (
@@ -31,13 +34,33 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 function Login() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate()
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const formData = new FormData(event.currentTarget);
+    const data = Object.fromEntries(formData.entries())
+    try{
+      const response = await fetch('/api/user/login',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      const responseData = await response.json()
+      if(responseData.success){
+        localStorage.setItem("token", responseData.data.token)
+        toast.success('You have Logged in successfully')
+        toast('Redirecting to home page')
+        navigate('/home')
+      }
+      else{
+        toast.error(responseData.message)
+      }
+    }
+    catch(error){
+      console.log("Something went wrong",error);
+    }
   };
 
   return (
