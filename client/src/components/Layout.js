@@ -35,7 +35,7 @@ function Layout({children}) {
     <div className="d-flex h-100">
         <div className="sidebar text-white bg-primary rounded me-3 p-3" style={{ width: '300px', boxShadow: '0 0 2px gray' }}>
             <div className='sidebar-header pb-2'>
-                Menu Items
+                
             </div>
             <div className='menu text-white mt-5'>
                 {menuToBeRendered.map((menuItem)=>{

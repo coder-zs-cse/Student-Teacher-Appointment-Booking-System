@@ -5,6 +5,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -14,6 +17,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 
 function Copyright(props) {
@@ -34,11 +38,19 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 function Login() {
+  const [role, setRole] = useState('');
+
+  const handleChange = (event) => {
+    setRole(event.target.value);
+  };
+
   const navigate = useNavigate()
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries())
+    // console.log(data);
     try{
       const response = await fetch('/api/user/login',{
         method: 'POST',
@@ -79,7 +91,7 @@ function Login() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Student Login
+            Login
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -102,6 +114,20 @@ function Login() {
               id="password"
               autoComplete="current-password"
             />
+            <InputLabel id="role-select-label" required className='mt-3'>Role</InputLabel>
+            <Select
+              labelId="role-select-label"
+              id="role-select"
+              name="role"
+              value={role}
+              required
+              fullWidth
+              onChange={handleChange}
+              sx={{ height: '40px'}}
+            >
+              <MenuItem value="student">Student</MenuItem>
+              <MenuItem value="teacher">Teacher</MenuItem>
+            </Select>
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"

@@ -30,6 +30,17 @@ function App() {
           <Route path='/login' element={
             <PublicRoutes>
             <Login />
+            </PublicRoutes>} />
+
+          <Route path='/teacher-registration' element={
+            <PublicRoutes>
+            <Register />
+            </PublicRoutes>
+            } />
+
+          <Route path='/teacher-login' element={
+            <PublicRoutes>
+            <Login />
             </PublicRoutes>} 
           />
           

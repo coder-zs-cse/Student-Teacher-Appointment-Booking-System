@@ -14,6 +14,7 @@ function Home(){
             console.log(responseData);
         }
         catch(error){
+            localStorage.clear()
             console.log("Something went wrong");
         }
     } 

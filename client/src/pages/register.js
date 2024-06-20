@@ -5,6 +5,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -15,6 +18,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios'
 import { json, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 function Copyright(props) {
   return (
@@ -34,12 +38,25 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 function Register() {
+  const [role, setRole] = useState('');
+  const [speciality, setSpeciality] = useState('');
+
+  const handleChange = (event) => {
+    setRole(event.target.value);
+    if (event.target.value !== 'teacher') {
+      setSpeciality('');
+    }
+  };
+
+
+
   const navigate = useNavigate()
   const handleSubmit = async (event) => {
     event.preventDefault(); // prevents default form submission
     const formData = new FormData(event.currentTarget); // currentTarget is the DOM element that triggered the event
     const data = {...Object.fromEntries(formData.entries())};
     try{
+      console.log(data);
       const response = await fetch('/api/user/register', {
         method: 'POST',
         headers: {
@@ -69,7 +86,7 @@ function Register() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: '20px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -79,11 +96,11 @@ function Register() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Student Registration
+            Signup
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} noValidate >
             <TextField
-              margin="normal"
+              margin="dense"
               required
               fullWidth
               id="name"
@@ -93,7 +110,7 @@ function Register() {
               autoFocus
             />
             <TextField
-              margin="normal"
+              margin="dense"
               required
               fullWidth
               id="email"
@@ -103,7 +120,7 @@ function Register() {
               autoFocus
             />
             <TextField
-              margin="normal"
+              margin="dense"
               required
               fullWidth
               name="password"
@@ -113,6 +130,35 @@ function Register() {
               autoComplete="current-password"
             />
 
+            <InputLabel id="role-select-label" required className='mt-3'>Role</InputLabel>
+            <Select
+              labelId="role-select-label"
+              id="role-select"
+              name="role"
+              value={role}
+              required
+              fullWidth
+              onChange={handleChange}
+              sx={{ height: '40px'}}
+            >
+              <MenuItem value="student">Student</MenuItem>
+              <MenuItem value="teacher">Teacher</MenuItem>
+            </Select>
+            
+            {role === 'teacher' && (
+              <TextField
+                margin="dense"
+                required
+                fullWidth
+
+                id="speciality"
+                label="Speciality"
+                name="speciality"
+                value={speciality}
+                onChange={(e) => setSpeciality(e.target.value)}
+                sx={{ mt: 2 }}
+              />
+            )}
             <Button
               type="submit"
               fullWidth

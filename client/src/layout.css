@@ -1,0 +1,39 @@
+/* .main{
+    padding: 20px;
+    height: 100vh
+}
+
+.layout{
+    height: 100%;
+    display: flex;
+}
+
+.sidebar{
+    box-shadow: 0 0 2px gray;
+    width: 200px;
+    margin-right: 10px;
+    background-color: #2F49D1;
+    border-radius: 5px;
+}
+
+.content{
+    height: 100%;
+    width: 100%;
+    background-color: rgb(212, 212, 212);
+    border-radius: 8px;
+}
+
+.header{
+    height: 7vh;
+    width: 100%;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+.body{
+    width: 100%
+}
+
+ */
