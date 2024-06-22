@@ -83,7 +83,8 @@ router.post('/get-user-info-by-id',authMiddleware, async (req,res)=>{
                 success: true,
                 data: {
                     name: user.name,
-                    email: user.email
+                    email: user.email,
+                    role: req.body.role
                 }
             })
         }
