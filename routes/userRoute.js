@@ -56,7 +56,7 @@ router.post('/login',async (req,res)=>{
         if(!isMatch){
             return res.status(200).send({message: "Incorrect password or email address", success: false})
         }
-        const token = await jwt.sign({ id: user._id}, process.env.JWT_SECRET,{
+        const token = await jwt.sign({ id: user._id, myRole: role}, process.env.JWT_SECRET,{
             expiresIn: "1d"
         })
         // console.log("Working");
@@ -70,7 +70,8 @@ router.post('/login',async (req,res)=>{
 
 router.post('/get-user-info-by-id',authMiddleware, async (req,res)=>{
     try{
-        const user = await User.findOne({_id: req.body.userId})
+        let Model = req.body.role === 'teacher' ? Teacher : Student;
+        const user = await Model.findOne({_id: req.body.userId})
         if(!user){
             return res.status(200).send({
                 message: "User not found", success: false

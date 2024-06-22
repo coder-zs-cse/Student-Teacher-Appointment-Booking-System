@@ -18,12 +18,8 @@ function Layout({children}) {
             name: 'Profile',
             path: '/profile',
             icon: "ri-user-line mt-auto mb-auto"
-        },
-        {
-            name: 'Logout',
-            path: '/logout',
-            icon: 'ri-logout-box-r-line mt-auto mb-auto'
-        },
+        }
+        
         
     ]
 
@@ -41,11 +37,15 @@ function Layout({children}) {
                 {menuToBeRendered.map((menuItem)=>{
                     return (
                         <div className='d-flex' >
-                            <i class={menuItem.icon}></i>
+                            <i className={menuItem.icon}></i>
                             <Link to={menuItem.path} className='text-white ms-2 text-decoration-none mb-3 mt-3'>{menuItem.name}</Link>
                         </div>
                     )
                 })}
+                <div className='d-flex' onClick={()=> localStorage.clear()}>
+                        <i className='ri-logout-box-r-line mt-auto mb-auto'></i>
+                        <Link to='/login' className='text-white ms-2 text-decoration-none mb-3 mt-3'>Logout</Link>
+                </div>
 
             </div>
         </div>

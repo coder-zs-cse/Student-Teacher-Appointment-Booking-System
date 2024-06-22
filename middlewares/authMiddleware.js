@@ -14,6 +14,7 @@ function authMiddleware(req,res,next){
                 })
             }
             else{
+                req.body.role = decoded.myRole
                 req.body.userId = decoded.id
                 next()
             }

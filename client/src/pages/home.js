@@ -5,12 +5,13 @@ function Home(){
 
     async function getUserData(){
         try{
-            const responseData = fetch('/api/user/get-user-info-by-id',{
+            const response = await fetch('/api/user/get-user-info-by-id',{
                 method: 'POST',
                 headers: {
                     Authorization: 'Bearer '+ localStorage.getItem('token')
                 }
-            }).json()
+            })
+            const responseData = await response.json()
             console.log(responseData);
         }
         catch(error){
@@ -23,7 +24,7 @@ function Home(){
     },[])
     return (
         <Layout>
-        <div>Home sweet home</div>
+        <div>Home sweiet home</div>
         </Layout>
     )
 }

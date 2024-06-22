@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-
+// error handling of mongo_uri needs to be done
 mongoose.connect(process.env.MONGO_URI)
 
 const connection = mongoose.connection
