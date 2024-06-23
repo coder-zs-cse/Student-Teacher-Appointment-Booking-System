@@ -38,7 +38,7 @@ function Layout({children}) {
                 Book 1:1 Personalized Session
             </div>
             <div className="body w-100">
-                User role: {user?.role}
+               
                 
                 {children}
             </div>

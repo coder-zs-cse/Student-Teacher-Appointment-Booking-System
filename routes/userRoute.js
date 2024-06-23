@@ -7,6 +7,7 @@ const Teacher = require("../models/teacherModel.js");
 const Session = require("../models/sessionModel.js");
 const jwt = require("jsonwebtoken");
 const authMiddleware = require("../middlewares/authMiddleware.js");
+const studentAuth = require("../middlewares/studentauth.js")
 
 router.use(express.json());
 
@@ -113,7 +114,7 @@ router.post("/get-user-info-by-id", authMiddleware, async (req, res) => {
   }
 });
 
-router.get("/book-appointment", authMiddleware, async (req, res) => {
+router.get("/book-appointment", authMiddleware,studentAuth, async (req, res) => {
   try {
     const teacherData = await Teacher.find();
     const finalData = teacherData.map((teacher) => {
@@ -133,7 +134,7 @@ router.get("/book-appointment", authMiddleware, async (req, res) => {
   }
 });
 
-router.post("/teacher/book-appointment/", authMiddleware, async (req, res) => {
+router.post("/teacher/book-appointment/", authMiddleware,studentAuth, async (req, res) => {
   try {
     const { studentID, teacherID, scheduleDateTime } = req.body;
     const existingAppointment = await Session.findOne({
@@ -163,13 +164,14 @@ router.post("/teacher/book-appointment/", authMiddleware, async (req, res) => {
       .json({ success: false, message: "Error booking appointment", error: error.message });
   }
 });
-router.post("/get-teacher-by-id", authMiddleware, async (req, res) => {
+router.post("/get-teacher-by-id", authMiddleware,studentAuth, async (req, res) => {
   try {
     const teacherid = req.body.teacherID;
     const teacher = await Teacher.findOne({ _id: teacherid });
     const appointments = await Session.find({
       teacherID: teacherid,
-    }).sort({ "dateTime.date": 1, "dateTime.time": 1 });
+    }).sort({ scheduleDateTime: 1 });
+
     return res.status(200).send({
       success: true,
       data: {
@@ -201,12 +203,14 @@ router.post("/get-teacher-by-id", authMiddleware, async (req, res) => {
 router.get("/appointments", authMiddleware, async (req, res) => {
   try {
     // In a real application, you'd get the doctorId from the authenticated user
-    const studentID = req.body.userId; // Assuming you have authentication middleware
+    const idName = req.body.role==='student' ? "studentID" : "teacherID"
+    const id = req.body.userId; // Assuming you have authentication middleware
+    // console.log(req.body);
     // const appointments = await Session.find({ teacherID });
-    const appointments = await Session.find({ studentID })
-      .populate("teacherID", "name") // This populates the student's name
-      .sort({ "dateTime.date": 1, "dateTime.time": 1 }); // Sort by date and time
-    // console.log(appointments);
+    const appointments = await Session.find({ [idName]: id })
+      .populate("teacherID", "name")// This populates the student's name
+      .populate("studentID","name")
+      .sort({ scheduleDateTime: 1 }); // Sort by date and time
     res.status(200).json(appointments);
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });

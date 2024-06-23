@@ -10,7 +10,7 @@ const userMenu = [
         icon: 'ri-file-list-line mt-auto mb-auto '
     },
     {
-        name: 'Appointments',
+        name: 'My Appointments',
         path: '/user-appointments',
         icon: 'ri-file-list-line mt-auto mb-auto'
     },
@@ -30,8 +30,8 @@ const teacherMenu = [
         icon: 'ri-home-line mt-auto mb-auto'
     },
     {
-        name: 'Appointments',
-        path: '/appointment',
+        name: 'My Appointments',
+        path: '/teacher/appointments',
         icon: 'ri-file-list-line mt-auto mb-auto'
     },
     {

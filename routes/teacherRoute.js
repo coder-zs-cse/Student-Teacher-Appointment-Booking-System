@@ -7,6 +7,7 @@ const Teacher = require("../models/teacherModel.js");
 const Session = require("../models/sessionModel.js");
 const jwt = require("jsonwebtoken");
 const authMiddleware = require("../middlewares/authMiddleware.js");
+const teacherAuth = require("../middlewares/teacherauth.js")
 
 router.use(express.json());
 
@@ -81,50 +82,10 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/get-user-info-by-id", authMiddleware, async (req, res) => {
-  try {
-    let Model = req.body.role === "teacher" ? Teacher : Student;
-    const user = await Model.findOne({ _id: req.body.userId });
-    if (!user) {
-      return res.status(200).send({
-        message: "User not found",
-        success: false,
-      });
-    } else {
-      return res.status(200).send({
-        success: true,
-        data: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          role: req.body.role,
-        },
-      });
-    }
-  } catch (error) {
-    return res.status(500).send({
-      message: "Error getting user info",
-      success: false,
-    });
-  }
-});
 
-router.get("/appointments", authMiddleware, async (req, res) => {
-  try {
-    // In a real application, you'd get the doctorId from the authenticated user
-    const teacherID = req.body.userId; // Assuming you have authentication middleware
-    // const appointments = await Session.find({ teacherID });
-    const appointments = await Session.find({ teacherID })
-      .populate("studentID", "name") // This populates the student's name
-      .sort({ "dateTime.date": 1, "dateTime.time": 1 }); // Sort by date and time
-    // console.log(appointments);
-    res.status(200).json(appointments);
-  } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
-  }
-});
 
-router.put("/appointments/:id", authMiddleware, async (req, res) => {
+
+router.put("/appointments/:id", authMiddleware, teacherAuth,async (req, res) => {
   try {
     // In a real application, you'd get the doctorId from the authenticated user
     console.log("my body", req.body);
@@ -149,7 +110,7 @@ router.put("/appointments/:id", authMiddleware, async (req, res) => {
   }
 });
 
-router.post("/teacher/book-appointment/", authMiddleware, async (req, res) => {
+router.post("/teacher/book-appointment/", authMiddleware, teacherAuth,async (req, res) => {
   try {
     const { studentID, teacherID, date, time } = req.body;
     const existingAppointment = await Session.findOne({
@@ -187,7 +148,7 @@ router.post("/teacher/book-appointment/", authMiddleware, async (req, res) => {
     });
   }
 });
-router.post("/get-teacher-by-id", authMiddleware, async (req, res) => {
+router.post("/get-teacher-by-id", authMiddleware,teacherAuth, async (req, res) => {
   try {
     const teacherid = req.body.teacherID;
     const teacher = await Teacher.findOne({ _id: teacherid });

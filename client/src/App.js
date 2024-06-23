@@ -9,7 +9,7 @@ import { ProtectedRoute } from "./components/ProtectedRoutes.js";
 import { PublicRoutes } from "./components/PublicRoutes.js";
 import BookAppointment from "./pages/bookAppointment.js";
 import BookingPage from "./pages/bookingPage.js";
-import Appointments from "./pages/teacher/Appointments.js";
+import TeacherAppointments from "./pages/teacher/Appointments.js";
 import UserAppointment from './pages/Appointment.js'
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
         <Toaster position="top-center" reverseOrder={false} />
         <Routes>
           <Route
-            path="/"
+            path="/home"
             element={
               <ProtectedRoute>
                 <Home />
@@ -45,10 +45,10 @@ function App() {
             }
           />
           <Route
-            path="/appointment"
+            path="/teacher/appointments"
             element={
               <ProtectedRoute>
-                <Appointments />
+                <TeacherAppointments />
               </ProtectedRoute>
             }
           />

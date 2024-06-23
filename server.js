@@ -14,7 +14,7 @@ app.use(express.json())
 function start(){
     console.log("IT is happening");
 }
-app.use('/api/v1/user',userRouter)
+app.use('/api/v1/user/',userRouter)
 app.use('/api/v1/teacher/',teacherRouter)
 
 app.listen(port,()=>{

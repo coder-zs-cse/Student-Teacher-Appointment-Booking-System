@@ -83,7 +83,7 @@ const UserAppointment = () => {
   const handleAction = async (id, action) => {
     // Replace this with your actual API call
     try {
-      const response = await fetch(`/api/v1/teacher/appointments/${id}`, {
+      const response = await fetch(`/api/v1/user/appointments/${id}`, {
         method: "PUT",
         body: JSON.stringify({ _id: id, status: action }),
         headers: {
@@ -136,7 +136,7 @@ const UserAppointment = () => {
               <tr key={appointment._id}>
                 <td>{appointment.teacherID.name}</td>
                 <td>
-                  {dayjs(appointment.dateTime).format("MMMM D, YYYY h:mm A")}
+                  {dayjs(appointment.scheduleDateTime).format("MMMM D, YYYY h:mm A")}
                 </td>
                 <td>{appointment.status}</td>
                 <td>

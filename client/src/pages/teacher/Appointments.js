@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 
-const Appointments = () => {
+const TeacherAppointments = () => {
   const [appointments, setAppointments] = useState([]);
   const [filteredAppointments, setFilteredAppointments] = useState([]);
   const [filters, setFilters] = useState({
@@ -31,7 +31,7 @@ const Appointments = () => {
   const fetchAppointments = async () => {
     // Replace this with your actual API call
     try {
-      const response = await fetch("/api/v1/teacher/appointments", {
+      const response = await fetch("/api/v1/user/appointments", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -135,7 +135,7 @@ const Appointments = () => {
               <tr key={appointment._id}>
                 <td>{appointment.studentID.name}</td>
                 <td>
-                  {dayjs(appointment.dateTime).format("MMMM D, YYYY h:mm A")}
+                  {dayjs(appointment.scheduleDateTime).format("MMMM D, YYYY h:mm A")}
                 </td>
                 <td>{appointment.status}</td>
                 <td>
@@ -170,4 +170,4 @@ const Appointments = () => {
   );
 };
 
-export default Appointments;
+export default TeacherAppointments;
