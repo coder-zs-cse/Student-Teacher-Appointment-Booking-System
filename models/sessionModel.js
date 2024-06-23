@@ -1,15 +1,15 @@
 const mongoose = require("mongoose")
 
-const dateTimeSchema = new mongoose.Schema({
-    date: {
-        type: String,
-        required: true
-    },
-    time: {
-        type: String,
-        required: true
-    }
-})
+// const dateTimeSchema = new mongoose.Schema({
+//     date: {
+//         type: String,
+//         required: true
+//     },
+//     time: {
+//         type: String,
+//         required: true
+//     }
+// })
 const sessionSchema =  new mongoose.Schema({
     studentID: {
         type: mongoose.Schema.Types.ObjectId,
@@ -21,13 +21,13 @@ const sessionSchema =  new mongoose.Schema({
         ref: 'teachers',
         required: true
     },
-    dateTime:{
-        type: dateTimeSchema,
-        default: {}
+    scheduleDateTime:{
+        type: String,
+        required: true
     },
     status:{
         type: String,
-        enum: ['pending', 'confirmed', 'cancelled', 'completed'],
+        enum: ['pending', 'accepted', 'cancelled', 'completed'],
         default: 'pending'
     }
 },{

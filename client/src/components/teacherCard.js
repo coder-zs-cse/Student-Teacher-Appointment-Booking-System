@@ -13,10 +13,7 @@ const TeacherCard = ({ teacher }) => {
 
   function handleBookNow(){
     // console.log("clicked");
-    navigate(`/doctor/book-appointment/${id}`)
-    // onClick={() => navigate(`/doctor/book-appointment/${doctor._id}`)}
-
-    // navigate(`/doctor/book-appointment/`)
+    navigate(`/teacher/book-appointment/${id}`)
   }
   return (
     <Card style={{ width: "18rem", margin: "1rem" }}>

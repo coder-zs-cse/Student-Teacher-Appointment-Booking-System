@@ -9,6 +9,8 @@ import { ProtectedRoute } from "./components/ProtectedRoutes.js";
 import { PublicRoutes } from "./components/PublicRoutes.js";
 import BookAppointment from "./pages/bookAppointment.js";
 import BookingPage from "./pages/bookingPage.js";
+import Appointments from "./pages/teacher/Appointments.js";
+import UserAppointment from './pages/Appointment.js'
 
 function App() {
   return (
@@ -35,7 +37,24 @@ function App() {
           />
 
           <Route
-            path="/doctor/book-appointment/:doctorID"
+            path="/user-appointments"
+            element={
+              <ProtectedRoute>
+                <UserAppointment />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/appointment"
+            element={
+              <ProtectedRoute>
+                <Appointments />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/teacher/book-appointment/:teacherID"
             element={
               <ProtectedRoute>
                 <BookingPage />

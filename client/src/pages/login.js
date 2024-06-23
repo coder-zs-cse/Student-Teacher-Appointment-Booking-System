@@ -50,9 +50,13 @@ function Login() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries())
+    if(!data.role){
+      toast.error("Please select your role")
+      return
+    }
     // console.log(data);
     try{
-      const response = await fetch('/api/user/login',{
+      const response = await fetch('/api/v1/user/login',{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

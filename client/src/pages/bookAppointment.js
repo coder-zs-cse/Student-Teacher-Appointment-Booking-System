@@ -10,7 +10,7 @@ function BookAppointment() {
 
   const getTeachersList = async () => {
     try {
-      const responseData = await fetch("/api/user/book-appointment", {
+      const responseData = await fetch("/api/v1/user/book-appointment", {
         method: "GET",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),

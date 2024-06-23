@@ -5,7 +5,7 @@ function Home(){
 
     async function getUserData(){
         try{
-            const response = await fetch('/api/user/get-user-info-by-id',{
+            const response = await fetch('/api/v1/user/get-user-info-by-id',{
                 method: 'POST',
                 headers: {
                     Authorization: 'Bearer '+ localStorage.getItem('token')

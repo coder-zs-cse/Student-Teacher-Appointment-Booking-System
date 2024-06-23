@@ -10,7 +10,7 @@ function ProtectedRoute(props){
     async function getUser(){
         try{
             
-            const responseData = await fetch('/api/user/get-user-info-by-id',{
+            const responseData = await fetch('/api/v1/user/get-user-info-by-id',{
                 method: 'POST',
                 headers: {
                     Authorization: 'Bearer '+ localStorage.getItem('token')
