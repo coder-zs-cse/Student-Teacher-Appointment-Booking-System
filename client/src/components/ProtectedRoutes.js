@@ -18,6 +18,7 @@ function ProtectedRoute(props){
             })
             const data = await responseData.json()
             if(data.success){
+                console.log(data.data);
                  dispatch(setUser(data.data))
             }else{
                 navigate('/login')

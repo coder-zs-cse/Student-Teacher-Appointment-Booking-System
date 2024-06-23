@@ -19,9 +19,9 @@ function Home(){
             console.log("Something went wrong");
         }
     } 
-    useEffect(()=>{
-        getUserData()
-    },[])
+    // useEffect(()=>{
+    //     getUserData()
+    // },[])
     return (
         <Layout>
         <div>Home sweiet home</div>

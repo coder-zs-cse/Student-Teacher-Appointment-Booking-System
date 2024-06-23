@@ -2,12 +2,21 @@ import React from 'react'
 import '../layout.css'
 import { Flex } from 'antd'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+
 function Layout({children}) {
+    const {user} = useSelector((state)=>state.user)
+    
     const userMenu = [
         {
             name: "Home",
             path: '/home',
             icon: 'ri-home-line mt-auto mb-auto'
+        },
+        {
+            name: 'Book an Appointment',
+            path: '/book-appointment',
+            icon: 'ri-file-list-line mt-auto mb-auto '
         },
         {
             name: 'Appointments',
@@ -23,7 +32,38 @@ function Layout({children}) {
         
     ]
 
-    const menuToBeRendered = userMenu
+    const teacherMenu = [
+        {
+            name: "Home",
+            path: '/home',
+            icon: 'ri-home-line mt-auto mb-auto'
+        },
+        {
+            name: 'Book an Appointments',
+            path: '/book-appointment',
+            icon: 'ri-file-list-line mt-auto mb-auto'
+        },
+        {
+            name: 'Appointments',
+            path: '/appointment',
+            icon: 'ri-file-list-line mt-auto mb-auto'
+        },
+        {
+            name: 'Profile',
+            path: '/profile',
+            icon: "ri-user-line mt-auto mb-auto"
+        },
+        {
+            name: 'Profile',
+            path: '/profile',
+            icon: "ri-user-line mt-auto mb-auto"
+        }
+        
+        
+    ]
+
+
+    const menuToBeRendered = user?.role==='teacher' ? teacherMenu : userMenu  
   return (
 
     
@@ -54,6 +94,8 @@ function Layout({children}) {
                 Book 1:1 Personalized Session
             </div>
             <div className="body w-100">
+                User role: {user?.role}
+                
                 {children}
             </div>
         </div>
