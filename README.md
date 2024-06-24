@@ -63,3 +63,5 @@ npm start
 yarn start
 ```
 The frontend should now be running on http://localhost:3000.
+
+### Cool, now open your web browser and navigate to `http://localhost:3000/register` to access the application.
