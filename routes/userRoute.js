@@ -15,7 +15,9 @@ const {registerController,
   appointmentListController,
   teacherDetailsController,
   bookAppointmentController,
-  teacherInfoController
+  teacherInfoController,
+  updateAppointmentController,
+  deleteAppointmentController
 }  = require('../controllers/userCtrl.js')
 
 
@@ -37,8 +39,9 @@ router.post("/get-teacher-by-id", authMiddleware,studentAuth, teacherInfoControl
 
 router.get("/appointments", authMiddleware, appointmentListController);
 
+router.put("/update-appointment/:id", authMiddleware, updateAppointmentController)
 
-
+router.delete('/delete-appointment/:id',authMiddleware, deleteAppointmentController)
 
 module.exports = router;
 

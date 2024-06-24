@@ -49,20 +49,7 @@ const BookingPage = () => {
     }
   }, []);
 
-  //reminder to implement code for loading screen
-  // const fetchAvailableSlots = async () => {
-  //   setIsLoading(true);
-  //   // Simulate API call to fetcnh available slots based on teacher and date
-  //   const response = await fetch(`/api/slots?teacherId=${teacher.id}&date=${selectedDate.toISOString()}`);
-  //   const data = await response.json();
-  //   setAvailableSlots(data.availableSlots);
-  //   setIsLoading(false);
-
-  // };
-
-  // if (selectedDate) {
-  //   fetchAvailableSlots();
-  // }
+  
 
   const handleSubmitBooking = async (event) => {
     event.preventDefault();
@@ -125,7 +112,7 @@ const BookingPage = () => {
                       <strong>Speciality: </strong> {teacher?.speciality}
                     </p>
                     <p className="card-text">
-                      <strong>Fees:</strong> ${teacher?.fees}
+                      <strong>Email:</strong> {teacher?.email}
                     </p>
                   </div>
 

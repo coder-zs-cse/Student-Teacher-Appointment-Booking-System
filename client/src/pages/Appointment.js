@@ -82,12 +82,32 @@ const UserAppointment = () => {
       }));
     }
   };
+  const deleteAppointment = async(id)=>{
 
+    try {
+      setIsLoading(true);
+      const response = await fetch(`/api/v1/user/delete-appointment/${id}`, {
+        method: "DELETE",
+        body: JSON.stringify({ _id: id}),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      const responseData = await response.json();
+      console.log("data inside handleAction of appointments", responseData);
+      fetchAppointments(); // Refresh the appointments list
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log("Some server error in handleaction of appointment");
+    }
+  };
   const handleAction = async (id, action) => {
     // Replace this with your actual API call
     try {
       setIsLoading(true);
-      const response = await fetch(`/api/v1/user/appointments/${id}`, {
+      const response = await fetch(`/api/v1/user/update-appointment/${id}`, {
         method: "PUT",
         body: JSON.stringify({ _id: id, status: action }),
         headers: {
@@ -154,28 +174,29 @@ const UserAppointment = () => {
                   </td>
                   <td>{appointment.status}</td>
                   <td>
-                    {appointment.status === "pending" && (
+                    {((appointment.status === "accepted" ||
+                      appointment.status === "pending") && (
                       <>
-                        <Button
-                          variant="success"
-                          size="sm"
-                          className="me-2"
-                          onClick={() =>
-                            handleAction(appointment._id, "accepted")
-                          }
-                        >
-                          Accept
-                        </Button>
                         <Button
                           variant="danger"
                           size="sm"
                           onClick={() =>
-                            handleAction(appointment.id, "rejected")
+                            handleAction(appointment._id, "cancelled")
                           }
                         >
                           Cancel
                         </Button>
                       </>
+                    )) || (
+                      <div>
+                        <i
+                          class="ri-delete-bin-line ml-auto"
+                          onClick={() => {
+                            deleteAppointment(appointment._id);
+                          }}
+                          style={{ float: "right" }}
+                        ></i>
+                      </div>
                     )}
                   </td>
                 </tr>

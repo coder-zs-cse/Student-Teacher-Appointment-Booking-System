@@ -45,7 +45,12 @@ function BookAppointment() {
           </div>
         </div>
       ) : (
-        teachersList.length > 0 && (
+        teachersList.length == 0 ? (
+          <div className="text-center mt-5">
+            <p className="h3">Currently no teachers are available on this platform </p>
+          </div>
+        ): 
+         (
           <div className="d-flex flex-wrap ">
             {teachersList.map((teacher) => (
               <TeacherCard key={teacher.id} teacher={teacher} />

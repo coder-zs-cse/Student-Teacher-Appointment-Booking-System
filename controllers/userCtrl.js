@@ -133,7 +133,7 @@ const bookAppointmentController = async (req, res) => {
         .status(201)
         .json({
           success: true,
-          message: "Appointment booked successfully",
+          message: "Appointment booking request sent successfully",
           appointment: newAppointment,
         });
     }
@@ -209,6 +209,39 @@ const appointmentListController =  async (req, res) => {
     }
   }
 
+const updateAppointmentController = async (req, res) => {
+  try {
+    console.log("my body", req.body);
+    const { _id, status } = req.body;
+    const appointments = await Session.findByIdAndUpdate(_id, {
+      status
+    });
+    console.log("thisiss", appointments);
+    res.status(200).send({
+      success: true,
+      message: "Appointment Status Updated",
+    });
+    
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+const deleteAppointmentController = async(req,res)=>{
+  try {
+    console.log("my body", req.body);
+    const { _id} = req.body;
+    const deletedAppointment = await Session.deleteOne({_id})
+    if (deletedAppointment.deletedCount === 1) {
+      res.status(200).json({ message: 'Appointment deleted successfully' });
+    } else {
+      res.status(404).json({ message: 'Appointment not found' });
+    }
+  } catch (error) {
+    console.error('Error deleting appointment:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
 module.exports = {
   registerController,
   loginController,
@@ -216,5 +249,7 @@ module.exports = {
   bookAppointmentController,
   teacherDetailsController,
   teacherInfoController,
-  appointmentListController
+  appointmentListController,
+  updateAppointmentController,
+  deleteAppointmentController
 };

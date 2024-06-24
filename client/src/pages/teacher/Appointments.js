@@ -102,7 +102,26 @@ const TeacherAppointments = () => {
       console.log("Some server error in handleaction of appointment");
     }
   };
-
+  const deleteAppointment = async (id) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`/api/v1/user/delete-appointment/${id}`, {
+        method: "DELETE",
+        body: JSON.stringify({ _id: id }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      const responseData = await response.json();
+      console.log("data inside handleAction of appointments", responseData);
+      fetchAppointments(); // Refresh the appointments list
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log("Some server error in handleaction of appointment");
+    }
+  };
   return (
     <Layout>
       {isLoading ? (
@@ -152,7 +171,7 @@ const TeacherAppointments = () => {
                   </td>
                   <td>{appointment.status}</td>
                   <td>
-                    {appointment.status === "pending" && (
+                    {(appointment.status === "pending" && (
                       <>
                         <Button
                           variant="success"
@@ -174,6 +193,16 @@ const TeacherAppointments = () => {
                           Reject
                         </Button>
                       </>
+                    )) || (
+                      <div>
+                        <i
+                          class="ri-delete-bin-line ml-auto"
+                          onClick={() => {
+                            deleteAppointment(appointment._id);
+                          }}
+                          style={{ float: "right" }}
+                        ></i>
+                      </div>
                     )}
                   </td>
                 </tr>
