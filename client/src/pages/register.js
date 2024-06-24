@@ -56,7 +56,7 @@ function Register() {
     const formData = new FormData(event.currentTarget); // currentTarget is the DOM element that triggered the event
     const data = {...Object.fromEntries(formData.entries())};
     try{
-      console.log(data);
+      // console.log(data);
       const response = await fetch('/api/v1/user/register', {
         method: 'POST',
         headers: {
@@ -77,7 +77,7 @@ function Register() {
     catch(error){
       toast.error('Something went wrong')
     }
-    // console.log(responseData);
+    // // console.log(responseData);
   };
 
   return (

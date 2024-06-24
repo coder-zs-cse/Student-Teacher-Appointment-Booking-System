@@ -12,7 +12,7 @@ const TeacherCard = ({ teacher }) => {
 
 
   function handleBookNow(){
-    // console.log("clicked");
+    // // console.log("clicked");
     navigate(`/teacher/book-appointment/${id}`)
   }
   return (

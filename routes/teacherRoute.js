@@ -14,12 +14,12 @@ router.use(express.json());
 
 router.put("/appointments/:id", authMiddleware, teacherAuth,async (req, res) => {
   try {
-    console.log("my body", req.body);
+    // console.log("my body", req.body);
     const { _id, status } = req.body;
     const appointments = await Session.findByIdAndUpdate(_id, {
       status
     });
-    console.log("thisiss", appointments);
+    // console.log("thisiss", appointments);
     res.status(200).send({
       success: true,
       message: "Appointment Status Updated",

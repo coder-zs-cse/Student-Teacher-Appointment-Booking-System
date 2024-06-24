@@ -14,7 +14,7 @@ function Home() {
     // Replace this with your actual API call
 
     try {
-      console.log("this is the role", user?.role);
+      // console.log("this is the role", user?.role);
       if (user) {
         const response = await fetch(`/api/v1/user/appointments`, {
           method: "GET",
@@ -24,14 +24,14 @@ function Home() {
           },
         });
         const data = await response.json();
-        console.log("Appointments", data);
+        // console.log("Appointments", data);
         
         setAppointments(data);
         setIsLoading(false);
         setError(false);
       }
     } catch (error) {
-      console.log("Something wrong in fetchAppointments");
+      // console.log("Something wrong in fetchAppointments");
       setIsLoading(false);
     }
   };
@@ -44,7 +44,7 @@ function Home() {
   const handleBookSession = () => {
     // Handle book session logic (redirect to booking page, etc.)
     navigate("/book-appointment");
-    console.log("Book 1:1 session clicked");
+    // console.log("Book 1:1 session clicked");
   };
 
   function upcomingAppointmentExists(appointments){
@@ -60,7 +60,7 @@ function Home() {
     const nextAppointment = appointments.find(
       (appointment) => appointment.status === "accepted"
     ); // Assuming appointments are sorted by date
-    console.log("app: ", nextAppointment);
+    // console.log("app: ", nextAppointment);
     return (
       <div className="card my-3">
         <div className="card-body">

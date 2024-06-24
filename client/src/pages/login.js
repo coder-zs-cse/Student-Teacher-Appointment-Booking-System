@@ -70,7 +70,7 @@ function Login() {
       toast.error("Please select your role")
       return
     }
-    // console.log(data);
+    // // console.log(data);
     try{
       const response = await fetch('/api/v1/user/login',{
         method: 'POST',
@@ -94,7 +94,7 @@ function Login() {
     }
     catch(error){
       setIsLoading(false)
-      console.log("Something went wrong",error);
+      // console.log("Something went wrong",error);
     }
   };
   useEffect(()=>{

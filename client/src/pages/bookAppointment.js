@@ -21,7 +21,7 @@ function BookAppointment() {
       const data = await responseData.json();
       if (data.success) {
         setIsLoading(false);
-        console.log("mydata: ", data.data);
+        // console.log("mydata: ", data.data);
         setTeachersList(data.data);
       } else {
         setIsLoading(false);

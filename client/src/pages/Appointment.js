@@ -41,12 +41,12 @@ const UserAppointment = () => {
         },
       });
       const data = await response.json();
-      console.log("Appointments", data);
+      // console.log("Appointments", data);
       setAppointments(data);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      console.log("SOmething wrong in fetchAppointments");
+      // console.log("SOmething wrong in fetchAppointments");
     }
   };
 
@@ -95,12 +95,12 @@ const UserAppointment = () => {
         },
       });
       const responseData = await response.json();
-      console.log("data inside handleAction of appointments", responseData);
+      // console.log("data inside handleAction of appointments", responseData);
       fetchAppointments(); // Refresh the appointments list
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      console.log("Some server error in handleaction of appointment");
+      // console.log("Some server error in handleaction of appointment");
     }
   };
   const handleAction = async (id, action) => {
@@ -116,12 +116,12 @@ const UserAppointment = () => {
         },
       });
       const responseData = await response.json();
-      console.log("data inside handleAction of appointments", responseData);
+      // console.log("data inside handleAction of appointments", responseData);
       fetchAppointments(); // Refresh the appointments list
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      console.log("Some server error in handleaction of appointment");
+      // console.log("Some server error in handleaction of appointment");
     }
   };
 

@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 
 const registerController = async (req, res) => {
   try {
-    // console.log(req.body);
+    // // console.log(req.body);
     const { email, password, role, name } = req.body;
     let Model = role === "teacher" ? Teacher : Student;
 
@@ -30,7 +30,7 @@ const registerController = async (req, res) => {
       newUser.speciality = req.body.speciality;
     }
     await newUser.save();
-    // console.log("Working");
+    // // console.log("Working");
     res
       .status(200)
       .send({ message: "User created successfully", success: true });
@@ -41,7 +41,7 @@ const registerController = async (req, res) => {
 
 const loginController = async (req, res) => {
   try {
-    // console.log(req.body);
+    // // console.log(req.body);
     const { email, password, role } = req.body;
     let Model = role === "teacher" ? Teacher : Student;
 
@@ -66,7 +66,7 @@ const loginController = async (req, res) => {
         expiresIn: "1d",
       }
     );
-    // console.log("Working");
+    // // console.log("Working");
     res
       .status(200)
       .send({ message: "Login Successfull", success: true, data: { token } });
@@ -197,7 +197,7 @@ const appointmentListController =  async (req, res) => {
     try {
       const idName = req.body.role==='student' ? "studentID" : "teacherID"
       const id = req.body.userId; // Assuming you have authentication middleware
-      // console.log(req.body);
+      // // console.log(req.body);
       // const appointments = await Session.find({ teacherID });
       const appointments = await Session.find({ [idName]: id })
         .populate("teacherID", "name")// This populates the student's name
@@ -211,12 +211,12 @@ const appointmentListController =  async (req, res) => {
 
 const updateAppointmentController = async (req, res) => {
   try {
-    console.log("my body", req.body);
+    // console.log("my body", req.body);
     const { _id, status } = req.body;
     const appointments = await Session.findByIdAndUpdate(_id, {
       status
     });
-    console.log("thisiss", appointments);
+    // console.log("thisiss", appointments);
     res.status(200).send({
       success: true,
       message: "Appointment Status Updated",
@@ -229,7 +229,7 @@ const updateAppointmentController = async (req, res) => {
 
 const deleteAppointmentController = async(req,res)=>{
   try {
-    console.log("my body", req.body);
+    // console.log("my body", req.body);
     const { _id} = req.body;
     const deletedAppointment = await Session.deleteOne({_id})
     if (deletedAppointment.deletedCount === 1) {

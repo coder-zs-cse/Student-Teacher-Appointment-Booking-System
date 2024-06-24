@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 function Profile() {
     const {user} = useSelector((state)=>state.user)
-    console.log(user);
+    // console.log(user);
   return (
     <Layout>
        <div className="profile-container card shadow-sm">

@@ -27,7 +27,7 @@ const BookingPage = () => {
   // Fetch available slots on component mount or date change
   useEffect(() => {
     async function fetchData() {
-      console.log("data to send", data);
+      // console.log("data to send", data);
       try {
         const response = await fetch("/api/v1/user/get-teacher-by-id", {
           method: "POST",
@@ -38,10 +38,10 @@ const BookingPage = () => {
           body: JSON.stringify(data),
         });
         const responseData = await response.json();
-        console.log("this data", responseData);
+        // console.log("this data", responseData);
         setTeacher(responseData.data);
       } catch (error) {
-        console.log("some error inside useeffeect of booking page");
+        // console.log("some error inside useeffeect of booking page");
       }
     }
     if (!teacher) {
@@ -63,7 +63,7 @@ const BookingPage = () => {
     // const bookingDate = selectedDateTime.format("YYYY-MM-DD");
     // const bookingTime = selectedDateTime.format("HH:mm").toString
 
-    // console.log(bookingDate, bookingTime);
+    // // console.log(bookingDate, bookingTime);
     // Create a booking object
     const bookingData = {
       studentID: user?.id,
@@ -73,7 +73,7 @@ const BookingPage = () => {
       // time: bookingTime,
       // Add any other relevant booking information
     };
-    console.log("bookingdata: ",bookingData);
+    // console.log("bookingdata: ",bookingData);
     try {
       const response = await fetch("/api/v1/user/teacher/book-appointment", {
         method: "POST",
@@ -87,7 +87,7 @@ const BookingPage = () => {
       const responseData = await response.json();
       if (responseData.success) {
         toast.success(responseData.message);
-        console.log(responseData);
+        // console.log(responseData);
         navigate('/user-appointments')
       } else {
         toast.error(responseData.message);

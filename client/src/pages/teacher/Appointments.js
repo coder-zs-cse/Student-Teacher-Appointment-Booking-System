@@ -40,11 +40,11 @@ const TeacherAppointments = () => {
         },
       });
       const data = await response.json();
-      console.log("Appointments", data);
+      // console.log("Appointments", data);
       setAppointments(data);
       setIsLoading(false);
     } catch (error) {
-      console.log("SOmething wrong in fetchAppointments");
+      // console.log("SOmething wrong in fetchAppointments");
     }
   };
 
@@ -94,12 +94,12 @@ const TeacherAppointments = () => {
         },
       });
       const responseData = await response.json();
-      console.log("data inside handleAction of appointments", responseData);
+      // console.log("data inside handleAction of appointments", responseData);
       fetchAppointments(); // Refresh the appointments list
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      console.log("Some server error in handleaction of appointment");
+      // console.log("Some server error in handleaction of appointment");
     }
   };
   const deleteAppointment = async (id) => {
@@ -114,12 +114,12 @@ const TeacherAppointments = () => {
         },
       });
       const responseData = await response.json();
-      console.log("data inside handleAction of appointments", responseData);
+      // console.log("data inside handleAction of appointments", responseData);
       fetchAppointments(); // Refresh the appointments list
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      console.log("Some server error in handleaction of appointment");
+      // console.log("Some server error in handleaction of appointment");
     }
   };
   return (
@@ -195,7 +195,6 @@ const TeacherAppointments = () => {
                       </>
                     )) || ( appointment.status !== 'accepted'  && (
                       <div>
-                      {appointment.status}
                         <i
                           class="ri-delete-bin-line ml-auto"
                           onClick={() => {
