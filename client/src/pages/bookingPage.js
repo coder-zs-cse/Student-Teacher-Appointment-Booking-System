@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 const BookingPage = () => {
   const params = useParams();
   const dispatch = useDispatch();
-
+  const navigate = useNavigate()
   const { user } = useSelector((state) => state.user);
   const [teacher, setTeacher] = useState(null);
   const [selectedDateTime, setSelectedDateTime] = useState(null);
@@ -88,6 +88,7 @@ const BookingPage = () => {
       if (responseData.success) {
         toast.success(responseData.message);
         console.log(responseData);
+        navigate('/user-appointments')
       } else {
         toast.error(responseData.message);
       }

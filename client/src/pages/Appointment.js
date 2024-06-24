@@ -22,7 +22,7 @@ const UserAppointment = () => {
 
   useEffect(() => {
     // Fetch appointments from your API
-    fetchAppointments();
+      fetchAppointments();
   }, []);
 
   useEffect(() => {

@@ -193,8 +193,9 @@ const TeacherAppointments = () => {
                           Reject
                         </Button>
                       </>
-                    )) || (
+                    )) || ( appointment.status !== 'accepted'  && (
                       <div>
+                      {appointment.status}
                         <i
                           class="ri-delete-bin-line ml-auto"
                           onClick={() => {
@@ -203,7 +204,7 @@ const TeacherAppointments = () => {
                           style={{ float: "right" }}
                         ></i>
                       </div>
-                    )}
+                    ))}
                   </td>
                 </tr>
               ))}

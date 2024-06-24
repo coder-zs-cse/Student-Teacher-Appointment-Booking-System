@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 function Home() {
-  const [appointments, setAppointments] = useState([]);
+  const [appointments, setAppointments] = useState(null);
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true); // State for loading indicator
@@ -25,7 +25,7 @@ function Home() {
         });
         const data = await response.json();
         console.log("Appointments", data);
-
+        
         setAppointments(data);
         setIsLoading(false);
         setError(false);
@@ -36,7 +36,10 @@ function Home() {
     }
   };
   useEffect(() => {
-    fetchAppointments();
+    if(!appointments){
+      fetchAppointments();
+
+    }
   }, [user]);
   const handleBookSession = () => {
     // Handle book session logic (redirect to booking page, etc.)
@@ -44,6 +47,13 @@ function Home() {
     console.log("Book 1:1 session clicked");
   };
 
+  function upcomingAppointmentExists(appointments){
+    if(!appointments) return false
+    const nextAppointment = appointments.find(
+      (appointment) => appointment.status === "accepted"
+    ); // Assuming appointments are sorted by date
+    return nextAppointment
+  }
   function UpcomingAppointment({ appointments }) {
     // Display the details of the next upcoming appointment here
     // (adjust logic based on your appointment data structure)
@@ -82,13 +92,13 @@ function Home() {
           <div className="text-center mt-5">
             <div className="spinner-border" role="status">
               <span className="visually-hidden">Loading...</span>
-            </div>
+            </div> 
           </div>
         ) : error ? (
           <div className="alert alert-danger" role="alert">
             Error fetching appointments: {error.message}
           </div>
-        ) : appointments.length === 0 ? (
+        ) : !upcomingAppointmentExists(appointments) ? (
           <div className="text-center mt-5">
             <p className="h3">You have no confirmed appointments.</p>
           </div>
