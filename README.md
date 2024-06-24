@@ -65,3 +65,29 @@ yarn start
 The frontend should now be running on http://localhost:3000.
 
 ### Cool, now open your web browser and navigate to `http://localhost:3000/register` to access the application.
+
+
+
+# Demonstration of UI
+### Sign up page 
+![Screenshot (1462)](https://github.com/coder-zs-cse/Student-Teacher-Appointment-Booking-System/assets/75170293/b43cec15-cbbc-4011-91a2-4da9e5b5b6d3)
+### Sign up page with role of teacher
+![Screenshot (1464)](https://github.com/coder-zs-cse/Student-Teacher-Appointment-Booking-System/assets/75170293/b4c3d000-2c48-4615-b9d7-881d0d02263f)
+### Log in page
+![Screenshot (1463)](https://github.com/coder-zs-cse/Student-Teacher-Appointment-Booking-System/assets/75170293/ac883594-5725-4739-8fe6-8ecea0d69fd2)
+### List of Teachers
+![Screenshot (1466)](https://github.com/coder-zs-cse/Student-Teacher-Appointment-Booking-System/assets/75170293/f2a82974-1fd6-4b01-9353-2f776959e063)
+### Booking Appointment
+![Screenshot (1467)](https://github.com/coder-zs-cse/Student-Teacher-Appointment-Booking-System/assets/75170293/173efd16-75c2-4537-9975-4427c0ec4e23)
+### Viewing state of Appointment
+![Screenshot (1469)](https://github.com/coder-zs-cse/Student-Teacher-Appointment-Booking-System/assets/75170293/83d071e4-9d97-45f0-83ba-d2136cf54dee)
+### Profile of teacher
+![Screenshot (1471)](https://github.com/coder-zs-cse/Student-Teacher-Appointment-Booking-System/assets/75170293/96fcff13-c65d-498b-a3bd-30c4fd433bf8)
+### Appointments from teacher perspective
+![Screenshot (1472)](https://github.com/coder-zs-cse/Student-Teacher-Appointment-Booking-System/assets/75170293/71899ac0-e8dd-4cf2-bfc4-751504826a8f)
+### Using Checkboxes to filter pending booking status 
+![Screenshot (1473)](https://github.com/coder-zs-cse/Student-Teacher-Appointment-Booking-System/assets/75170293/1ce33dfd-c282-4fb7-9309-9358e2c4b146)
+### Upcoming appointment in user home page
+![Screenshot (1474)](https://github.com/coder-zs-cse/Student-Teacher-Appointment-Booking-System/assets/75170293/c0a75d35-a6bd-484b-b327-ba14b5518c89)
+
+
