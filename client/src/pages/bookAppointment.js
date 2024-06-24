@@ -6,6 +6,8 @@ import TeacherCard from "../components/teacherCard";
 
 function BookAppointment() {
   const [teachersList, setTeachersList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // State for loading indicator
+
   const navigate = useNavigate();
 
   const getTeachersList = async () => {
@@ -18,12 +20,15 @@ function BookAppointment() {
       });
       const data = await responseData.json();
       if (data.success) {
+        setIsLoading(false);
         console.log("mydata: ", data.data);
         setTeachersList(data.data);
       } else {
-        navigate("/");
+        setIsLoading(false);
+        navigate("/home");
       }
     } catch (error) {
+      setIsLoading(false);
       navigate("/");
     }
   };
@@ -33,15 +38,21 @@ function BookAppointment() {
 
   return (
     <Layout>
-      BookAppointment are{" "}
-      {teachersList.length > 0 && (
-        <div className="d-flex flex-wrap ">
-          {teachersList.map((teacher) => (
-            <TeacherCard key={teacher.id} teacher={teacher} />
-          ))}
+      {isLoading ? (
+        <div className="text-center mt-5">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
         </div>
+      ) : (
+        teachersList.length > 0 && (
+          <div className="d-flex flex-wrap ">
+            {teachersList.map((teacher) => (
+              <TeacherCard key={teacher.id} teacher={teacher} />
+            ))}
+          </div>
+        )
       )}
-
     </Layout>
   );
 }
