@@ -1,17 +1,10 @@
-const express = require("express");
-const router = express.Router();
-const bcrypt = require("bcryptjs");
-const User = require("../models/userModel.js");
 const Student = require("../models/studentModel.js");
 const Teacher = require("../models/teacherModel.js");
 const Session = require("../models/sessionModel.js");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const authMiddleware = require("../middlewares/authMiddleware.js");
-const teacherAuth = require("../middlewares/teacherauth.js")
 
-router.use(express.json());
-
-router.post("/register", async (req, res) => {
+const registerController = async (req, res) => {
   try {
     // console.log(req.body);
     const { email, password, role, name } = req.body;
@@ -44,9 +37,9 @@ router.post("/register", async (req, res) => {
   } catch (error) {
     res.status(500).send({ message: "Server error", success: false });
   }
-});
+};
 
-router.post("/login", async (req, res) => {
+const loginController = async (req, res) => {
   try {
     // console.log(req.body);
     const { email, password, role } = req.body;
@@ -80,42 +73,46 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     res.status(500).send({ message: "Server error", success: false, error });
   }
-});
+};
 
-
-
-
-router.put("/appointments/:id", authMiddleware, teacherAuth,async (req, res) => {
+const userInfoController = async (req, res) => {
   try {
-    console.log("my body", req.body);
-    const { _id, status } = req.body;
-    const appointments = await Session.findByIdAndUpdate(_id, {
-      status
+    let Model = req.body.role === "teacher" ? Teacher : Student;
+    const user = await Model.findOne({ _id: req.body.userId });
+    if (!user) {
+      return res.status(200).send({
+        message: "User not found",
+        success: false,
+      });
+    } else {
+      let output = {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: req.body.role,
+      };
+      if (output.role === "teacher") {
+        output["speciality"] = user.speciality;
+      }
+      return res.status(200).send({
+        success: true,
+        data: output,
+      });
+    }
+  } catch (error) {
+    return res.status(500).send({
+      message: "Error getting user info",
+      success: false,
     });
-    console.log("thisiss", appointments);
-    res.status(200).send({
-      success: true,
-      message: "Appointment Status Updated",
-    });
-    // const teacherID = req.body.userId  // Assuming you have authentication middleware
-    // // const appointments = await Session.find({ teacherID });
-    // const appointments = await Session.find({ teacherID })
-    //   .populate('studentID', 'name')  // This populates the student's name
-    //   .sort({ 'dateTime.date': 1, 'dateTime.time': 1 });  // Sort by date and time
-    // console.log(appointments);
-    // res.status(200).json(appointments);
-  } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
   }
-});
+};
 
-router.post("/teacher/book-appointment/", authMiddleware, teacherAuth,async (req, res) => {
+const bookAppointmentController = async (req, res) => {
   try {
-    const { studentID, teacherID, date, time } = req.body;
+    const { studentID, teacherID, scheduleDateTime } = req.body;
     const existingAppointment = await Session.findOne({
       teacherID,
-      "dateTime.date": date,
-      "dateTime.time": time,
+      scheduleDateTime,
     });
 
     if (existingAppointment) {
@@ -126,44 +123,33 @@ router.post("/teacher/book-appointment/", authMiddleware, teacherAuth,async (req
       const newAppointment = new Session({
         studentID,
         teacherID,
-        dateTime: { date, time },
+        scheduleDateTime,
         status: "pending", // This is the default, but we're setting it explicitly for clarity
       });
 
       // Save the new appointment
       await newAppointment.save();
-      res.status(201).json({
-        success: true,
-        message: "Appointment booked successfully",
-        appointment: newAppointment,
-      });
+      res
+        .status(201)
+        .json({
+          success: true,
+          message: "Appointment booked successfully",
+          appointment: newAppointment,
+        });
     }
   } catch (error) {
     console.error("Error booking appointment:", error);
-    res.status(500).json({
-      success: false,
-      message: "Error booking appointment",
-      error: error.message,
-    });
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Error booking appointment",
+        error: error.message,
+      });
   }
-});
-router.post("/get-teacher-by-id", authMiddleware,teacherAuth, async (req, res) => {
+};
+const teacherDetailsController = async (req, res) => {
   try {
-    const teacherid = req.body.teacherID;
-    const teacher = await Teacher.findOne({ _id: teacherid });
-    const appointments = await Session.find({
-      teacherID: teacherid,
-    }).sort({ "dateTime.date": 1, "dateTime.time": 1 });
-    return res.status(200).send({
-      success: true,
-      data: {
-        id: teacher._id,
-        name: teacher.name,
-        email: teacher.email,
-        speciality: teacher.speciality,
-        appointmentsList: appointments,
-      },
-    });
     const teacherData = await Teacher.find();
     const finalData = teacherData.map((teacher) => {
       return {
@@ -180,6 +166,55 @@ router.post("/get-teacher-by-id", authMiddleware,teacherAuth, async (req, res) =
       success: false,
     });
   }
-});
+};
 
-module.exports = router;
+const teacherInfoController = async (req, res) => {
+  try {
+    const teacherid = req.body.teacherID;
+    const teacher = await Teacher.findOne({ _id: teacherid });
+    const appointments = await Session.find({
+      teacherID: teacherid,
+    }).sort({ scheduleDateTime: 1 });
+
+    return res.status(200).send({
+      success: true,
+      data: {
+        id: teacher._id,
+        name: teacher.name,
+        email: teacher.email,
+        speciality: teacher.speciality,
+        appointmentsList: appointments,
+      },
+    });
+  } catch (error) {
+    return res.status(500).send({
+      message: "Error getting teacher info",
+      success: false,
+    });
+  }
+};
+const appointmentListController =  async (req, res) => {
+    try {
+      const idName = req.body.role==='student' ? "studentID" : "teacherID"
+      const id = req.body.userId; // Assuming you have authentication middleware
+      // console.log(req.body);
+      // const appointments = await Session.find({ teacherID });
+      const appointments = await Session.find({ [idName]: id })
+        .populate("teacherID", "name")// This populates the student's name
+        .populate("studentID","name")
+        .sort({ scheduleDateTime: 1 }); // Sort by date and time
+      res.status(200).json(appointments);
+    } catch (err) {
+      res.status(500).json({ success: false, message: err.message });
+    }
+  }
+
+module.exports = {
+  registerController,
+  loginController,
+  userInfoController,
+  bookAppointmentController,
+  teacherDetailsController,
+  teacherInfoController,
+  appointmentListController
+};
