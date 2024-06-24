@@ -18,6 +18,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 
 function Copyright(props) {
@@ -38,6 +39,9 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 function Login() {
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false); // State for loading indicator
+  const [isValid, setIsValid] = useState(true);
   const [role, setRole] = useState('');
 
   const handleChange = (event) => {
@@ -46,7 +50,19 @@ function Login() {
 
   const navigate = useNavigate()
 
+
+  const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+  const handleEmailChange = (event) => {
+    const newEmail = event.target.value;
+    setEmail(newEmail);
+    setIsValid(validateEmail(newEmail));
+  };
+
   const handleSubmit = async (event) => {
+    setIsLoading(true)
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries())
@@ -68,18 +84,25 @@ function Login() {
         localStorage.setItem("token", responseData.data.token)
         toast.success('You have Logged in successfully')
         toast('Redirecting to home page')
+        setIsLoading(false)
         navigate('/home')
       }
       else{
+        setIsLoading(false)
         toast.error(responseData.message)
       }
     }
     catch(error){
+      setIsLoading(false)
       console.log("Something went wrong",error);
     }
   };
+  useEffect(()=>{
+    setIsLoading(false)
+  },[])
 
   return (
+    
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -107,6 +130,9 @@ function Login() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={handleEmailChange}
+              error={!isValid}
+              helperText={!isValid ? "Please enter a valid email address" : ""}
             />
             <TextField
               margin="normal"
@@ -117,6 +143,7 @@ function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              
             />
             <InputLabel id="role-select-label" required className='mt-3'>Role</InputLabel>
             <Select
@@ -132,10 +159,7 @@ function Login() {
               <MenuItem value="student">Student</MenuItem>
               <MenuItem value="teacher">Teacher</MenuItem>
             </Select>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            
             <Button
               type="submit"
               fullWidth
@@ -147,7 +171,7 @@ function Login() {
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Forgot password?
+                  
                 </Link>
               </Grid>
               <Grid item>
@@ -161,7 +185,8 @@ function Login() {
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
-  );
+  )
+      
 }
 
 

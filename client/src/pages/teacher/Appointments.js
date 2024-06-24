@@ -154,7 +154,7 @@ const TeacherAppointments = () => {
                       <Button
                         variant="danger"
                         size="sm"
-                        onClick={() => handleAction(appointment.id, "rejected")}
+                        onClick={() => handleAction(appointment._id, "rejected")}
                       >
                         Reject
                       </Button>

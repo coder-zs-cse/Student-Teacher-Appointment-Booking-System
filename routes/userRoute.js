@@ -96,14 +96,18 @@ router.post("/get-user-info-by-id", authMiddleware, async (req, res) => {
         success: false,
       });
     } else {
+      let output = {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: req.body.role,
+      }
+      if (output.role==='teacher'){
+        output["speciality"] = user.speciality
+      }
       return res.status(200).send({
         success: true,
-        data: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          role: req.body.role,
-        },
+        data: output
       });
     }
   } catch (error) {
@@ -216,6 +220,9 @@ router.get("/appointments", authMiddleware, async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 });
+
+
+
 
 module.exports = router;
 

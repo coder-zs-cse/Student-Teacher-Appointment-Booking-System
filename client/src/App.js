@@ -11,13 +11,22 @@ import BookAppointment from "./pages/bookAppointment.js";
 import BookingPage from "./pages/bookingPage.js";
 import TeacherAppointments from "./pages/teacher/Appointments.js";
 import UserAppointment from './pages/Appointment.js'
-
+import Profile from "./pages/profile.js";
 function App() {
   return (
     <div>
       <BrowserRouter>
         <Toaster position="top-center" reverseOrder={false} />
         <Routes>
+          
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/home"
             element={
@@ -58,6 +67,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <BookingPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />

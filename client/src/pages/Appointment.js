@@ -157,7 +157,7 @@ const UserAppointment = () => {
                         size="sm"
                         onClick={() => handleAction(appointment.id, "rejected")}
                       >
-                        Reject
+                        Cancel
                       </Button>
                     </>
                   )}

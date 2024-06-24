@@ -65,9 +65,9 @@ function Home() {
             Time: {dayjs(nextAppointment?.scheduleDateTime).format("hh:mm A")}
             <br />
             {user?.role === "teacher" ? (
-              <>Student: {nextAppointment?.studentID.name}</>
+              <>Student Name: {nextAppointment?.studentID.name}</>
             ) : (
-              <>Teacher: {nextAppointment?.teacherID.name}</>
+              <>Teacher Name: {nextAppointment?.teacherID.name}</>
             )}
           </p>
         </div>
