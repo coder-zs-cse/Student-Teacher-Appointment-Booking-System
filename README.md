@@ -79,6 +79,8 @@ The frontend should now be running on http://localhost:3000.
 ![Screenshot (1466)](https://github.com/coder-zs-cse/Student-Teacher-Appointment-Booking-System/assets/75170293/f2a82974-1fd6-4b01-9353-2f776959e063)
 ### Booking Appointment
 ![Screenshot (1467)](https://github.com/coder-zs-cse/Student-Teacher-Appointment-Booking-System/assets/75170293/173efd16-75c2-4537-9975-4427c0ec4e23)
+### Validation of Appointment if there is a clash
+![Screenshot (1475)](https://github.com/coder-zs-cse/Student-Teacher-Appointment-Booking-System/assets/75170293/d2e99597-3ff5-492f-95c8-250cd6665500)
 ### Viewing state of Appointment
 ![Screenshot (1469)](https://github.com/coder-zs-cse/Student-Teacher-Appointment-Booking-System/assets/75170293/83d071e4-9d97-45f0-83ba-d2136cf54dee)
 ### Profile of teacher
