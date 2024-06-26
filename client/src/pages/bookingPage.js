@@ -29,7 +29,7 @@ const BookingPage = () => {
     async function fetchData() {
       // console.log("data to send", data);
       try {
-        const response = await fetch("/api/v1/user/get-teacher-by-id", {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user/get-teacher-by-id`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -75,7 +75,7 @@ const BookingPage = () => {
     };
     // console.log("bookingdata: ",bookingData);
     try {
-      const response = await fetch("/api/v1/user/teacher/book-appointment", {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user/teacher/book-appointment`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

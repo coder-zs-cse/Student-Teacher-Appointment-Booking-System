@@ -32,7 +32,7 @@ const TeacherAppointments = () => {
   const fetchAppointments = async () => {
     // Replace this with your actual API call
     try {
-      const response = await fetch("/api/v1/user/appointments", {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user/appointments`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -85,7 +85,7 @@ const TeacherAppointments = () => {
     // Replace this with your actual API call
     try {
       setIsLoading(true);
-      const response = await fetch(`/api/v1/teacher/appointments/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/teacher/appointments/${id}`, {
         method: "PUT",
         body: JSON.stringify({ _id: id, status: action }),
         headers: {
@@ -105,7 +105,7 @@ const TeacherAppointments = () => {
   const deleteAppointment = async (id) => {
     try {
       setIsLoading(true);
-      const response = await fetch(`/api/v1/user/delete-appointment/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user/delete-appointment/${id}`, {
         method: "DELETE",
         body: JSON.stringify({ _id: id }),
         headers: {

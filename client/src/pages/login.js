@@ -72,7 +72,7 @@ function Login() {
     }
     // // console.log(data);
     try{
-      const response = await fetch('/api/v1/user/login',{
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user/login`,{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

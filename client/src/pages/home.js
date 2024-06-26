@@ -16,7 +16,7 @@ function Home() {
     try {
       // console.log("this is the role", user?.role);
       if (user) {
-        const response = await fetch(`/api/v1/user/appointments`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user/appointments`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

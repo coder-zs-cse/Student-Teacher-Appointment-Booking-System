@@ -57,7 +57,7 @@ function Register() {
     const data = {...Object.fromEntries(formData.entries())};
     try{
       // console.log(data);
-      const response = await fetch('/api/v1/user/register', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -164,7 +164,7 @@ function Register() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign-up
+              Sign-up 
             </Button>
             <Grid item>
                 <Link href="/login" variant="body2">

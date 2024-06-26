@@ -33,7 +33,7 @@ const UserAppointment = () => {
     // Replace this with your actual API call
 
     try {
-      const response = await fetch("/api/v1/user/appointments", {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user/appointments`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -86,7 +86,7 @@ const UserAppointment = () => {
 
     try {
       setIsLoading(true);
-      const response = await fetch(`/api/v1/user/delete-appointment/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user/delete-appointment/${id}`, {
         method: "DELETE",
         body: JSON.stringify({ _id: id}),
         headers: {
@@ -107,7 +107,7 @@ const UserAppointment = () => {
     // Replace this with your actual API call
     try {
       setIsLoading(true);
-      const response = await fetch(`/api/v1/user/update-appointment/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user/update-appointment/${id}`, {
         method: "PUT",
         body: JSON.stringify({ _id: id, status: action }),
         headers: {

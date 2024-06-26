@@ -12,7 +12,7 @@ function BookAppointment() {
 
   const getTeachersList = async () => {
     try {
-      const responseData = await fetch("/api/v1/user/book-appointment", {
+      const responseData = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user/book-appointment`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
