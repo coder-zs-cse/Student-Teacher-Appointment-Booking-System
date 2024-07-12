@@ -10,7 +10,7 @@ import { PublicRoutes } from "./components/PublicRoutes.js";
 import BookAppointment from "./pages/bookAppointment.js";
 import BookingPage from "./pages/bookingPage.js";
 import TeacherAppointments from "./pages/teacher/Appointments.js";
-import UserAppointment from './pages/Appointment.js'
+import UserAppointment from "./pages/Appointment.js";
 import Profile from "./pages/profile.js";
 function App() {
   return (
@@ -18,7 +18,6 @@ function App() {
       <BrowserRouter>
         <Toaster position="top-center" reverseOrder={false} />
         <Routes>
-          
           <Route
             path="/"
             element={
